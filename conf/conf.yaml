@@ -1,0 +1,12 @@
+---
+location:
+  lat: 51
+  lon: 11
+
+operations:
+  - name: test
+    run_at: sun.dawn
+    tolerance: 300s
+    commands:
+      - ["date"]
+      - ["ls", "-la"]
