@@ -7,11 +7,16 @@ import (
 )
 
 type Conf struct {
-	Now      time.Time
+	Now      Now
 	FileName string
 	Content  ConfContent
 	Lg       logseal.Logseal
 	DryRun   bool
+}
+
+type Now struct {
+	UTC   time.Time
+	Local time.Time
 }
 
 type ConfContent struct {

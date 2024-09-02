@@ -13,12 +13,12 @@ import (
 
 func main() {
 	parseArgs()
-	now := time.Now().UTC()
+	now := time.Now()
 	lg := logseal.Init(CLI.LogLevel, CLI.LogFile, CLI.LogNoColors, CLI.LogJSON)
 	conf := conf.Init(now, CLI.Conf, lg)
 	conf.DryRun = CLI.DryRun
 	calc := calc.Init(
-		conf.Now, conf.Content.Location.Lat, conf.Content.Location.Lon,
+		conf.Now.UTC, conf.Content.Location.Lat, conf.Content.Location.Lon,
 	)
 
 	if CLI.Astro {
@@ -29,6 +29,7 @@ func main() {
 				"config": CLI.Conf, "log_level": CLI.LogLevel,
 			},
 		)
+		fmt.Printf("%+v\n", conf)
 		lg.Debug("full config", logseal.F{"config": fmt.Sprintf("%+v", conf)})
 		lg.Debug("astro calculations", logseal.F{"config": fmt.Sprintf("%+v", calc)})
 
