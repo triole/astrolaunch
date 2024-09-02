@@ -1,7 +1,7 @@
 ---
 location:
-  lat: 51
-  lon: 11
+  lat: 51.50808063275697
+  lon: -0.12806528535354245
 
 operations:
   - name: test
@@ -9,4 +9,10 @@ operations:
     range: 300s
     exec:
       - ["date"]
-      - ["ls", "-la"]
+      - ["echo", "this is dawn"]
+  - name: test
+    at: sun.dusk
+    range: 300s
+    exec:
+      - ["date"]
+      - ["echo", "this is dust"]

@@ -14,12 +14,13 @@ func main() {
 	parseArgs()
 	lg := logseal.Init(CLI.LogLevel, CLI.LogFile, CLI.LogNoColors, CLI.LogJSON)
 	conf := conf.Init(CLI.Conf, lg)
+	conf.DryRun = CLI.DryRun
 	calc := calc.Init(
 		time.Now(), conf.Content.Location.Lat, conf.Content.Location.Lon,
 	)
 	lg.Debug(
 		"run "+appName, logseal.F{
-			"config": CLI.Conf, "log_level": CLI.LogLevel,
+			"calc": calc, "config": CLI.Conf, "log_level": CLI.LogLevel,
 		},
 	)
 	lg.Debug("full configuration layout", logseal.F{"config": fmt.Sprintf("%+v", conf)})

@@ -11,6 +11,7 @@ type Conf struct {
 	Content  ConfContent
 	Now      time.Time
 	Lg       logseal.Logseal
+	DryRun   bool
 }
 
 type ConfContent struct {

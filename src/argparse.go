@@ -25,6 +25,7 @@ var CLI struct {
 	LogNoColors  bool   `help:"disable output colours, print plain text"`
 	LogJSON      bool   `help:"enable json log, instead of text one"`
 	ValidateConf bool   `help:"validate configuration and pretty print it"`
+	DryRun       bool   `help:"dry run, just print operations that would run" short:"n"`
 	VersionFlag  bool   `help:"display version" short:"V"`
 }
 
