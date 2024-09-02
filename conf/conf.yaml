@@ -5,8 +5,8 @@ location:
 
 operations:
   - name: test
-    run_at: sun.dawn
-    tolerance: 300s
-    commands:
+    at: sun.dawn
+    range: 300s
+    exec:
       - ["date"]
       - ["ls", "-la"]

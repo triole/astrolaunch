@@ -3,8 +3,6 @@ package conf
 import (
 	"time"
 
-	"astrolaunch/src/astro"
-
 	"github.com/triole/logseal"
 )
 
@@ -12,7 +10,6 @@ type Conf struct {
 	FileName string
 	Content  ConfContent
 	Now      time.Time
-	Astro    astro.Astro
 	Lg       logseal.Logseal
 }
 
@@ -21,10 +18,10 @@ type ConfContent struct {
 	Operations []Operation `yaml:"operations"`
 }
 type Operation struct {
-	Name      string     `yaml:"name"`
-	RunAt     string     `yaml:"run_at"`
-	Tolerance string     `yaml:"tolerance"`
-	Commands  [][]string `yaml:"commands"`
+	Name  string     `yaml:"name"`
+	At    string     `yaml:"at"`
+	Range string     `yaml:"range"`
+	Exec  [][]string `yaml:"exec"`
 }
 
 type Location struct {

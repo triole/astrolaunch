@@ -1,4 +1,4 @@
-package astro
+package calc
 
 import (
 	"strings"
@@ -7,15 +7,15 @@ import (
 	"github.com/sixdouglas/suncalc"
 )
 
-type Astro struct {
+type Calc struct {
 	Sun map[string]time.Time
 }
 
-func Init(now time.Time, lat, lon float64) (astro Astro) {
-	astro.Sun = make(map[string]time.Time)
+func Init(now time.Time, lat, lon float64) (calc Calc) {
+	calc.Sun = make(map[string]time.Time)
 	arr := suncalc.GetTimes(now, lat, lon)
 	for key, val := range arr {
-		astro.Sun[toSnakeCase(string(key))] = val.Value
+		calc.Sun[toSnakeCase(string(key))] = val.Value
 	}
 	return
 }
