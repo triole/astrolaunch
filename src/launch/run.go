@@ -6,7 +6,7 @@ import (
 
 func (la Launch) Run() {
 	for _, op := range la.Conf.Content.Operations {
-		now := time.Now()
+		now := time.Now().UTC()
 		fits := false
 		at, err := la.Calc.GetTime(op.At)
 		if err == nil {

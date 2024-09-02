@@ -12,11 +12,12 @@ import (
 
 func main() {
 	parseArgs()
+	now := time.Now().UTC()
 	lg := logseal.Init(CLI.LogLevel, CLI.LogFile, CLI.LogNoColors, CLI.LogJSON)
-	conf := conf.Init(CLI.Conf, lg)
+	conf := conf.Init(now, CLI.Conf, lg)
 	conf.DryRun = CLI.DryRun
 	calc := calc.Init(
-		time.Now(), conf.Content.Location.Lat, conf.Content.Location.Lon,
+		conf.Now, conf.Content.Location.Lat, conf.Content.Location.Lon,
 	)
 	lg.Debug(
 		"run "+appName, logseal.F{

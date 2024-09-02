@@ -7,9 +7,9 @@ import (
 )
 
 type Conf struct {
+	Now      time.Time
 	FileName string
 	Content  ConfContent
-	Now      time.Time
 	Lg       logseal.Logseal
 	DryRun   bool
 }

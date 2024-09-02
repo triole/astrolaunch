@@ -61,12 +61,6 @@ func printBuildTags(buildtags string) {
 	fmt.Printf("%s\n", s)
 }
 
-func alnum(s string) string {
-	s = strings.ToLower(s)
-	re := regexp.MustCompile("[^a-z0-9_-]")
-	return re.ReplaceAllString(s, "-")
-}
-
 func getUserdataMap() map[string]string {
 	user, err := user.Current()
 	if err != nil {
