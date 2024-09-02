@@ -1,24 +1,39 @@
 package launch
 
 import (
+	"astrolaunch/src/conf"
 	"time"
+
+	"github.com/triole/logseal"
 )
 
 func (la Launch) Run() {
 	for _, op := range la.Conf.Content.Operations {
 		now := time.Now().UTC()
+		var diff time.Duration
 		fits := false
 		at, err := la.Calc.GetTime(op.At)
 		if err == nil {
 			rangeDuration, err := str2dur(op.Range)
-			fits = rangeFits(now, at, rangeDuration)
+			diff, fits = calcRangeDiff(now, at, rangeDuration)
 			if err == nil {
 			} else {
 				la.Lg.Warn(err)
 			}
 		}
 		if fits {
+			la.Lg.Info("exec operation", la.printOpStatus(op, diff, fits))
 			la.execute(op.Exec)
+		} else {
+			la.Lg.Info("skip operation", la.printOpStatus(op, diff, fits))
 		}
 	}
+}
+
+func (la Launch) printOpStatus(op conf.Operation, diff time.Duration, fits bool) (f logseal.F) {
+	f = logseal.F{
+		"name": op.Name, "at": op.At, "exec": op.Exec, "range": op.Range,
+		"diff": diff, "fits": fits,
+	}
+	return
 }

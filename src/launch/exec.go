@@ -12,7 +12,6 @@ import (
 
 func (la Launch) execute(cmds [][]string) (output []byte, exitcode int, err error) {
 	for _, cmdArr := range cmds {
-		la.Lg.Info("exec command", logseal.F{"cmd": cmdArr})
 		if !la.Conf.DryRun {
 			output, exitcode, err = la.runCmd(cmdArr)
 		}

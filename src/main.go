@@ -4,6 +4,7 @@ import (
 	"astrolaunch/src/calc"
 	"astrolaunch/src/conf"
 	"astrolaunch/src/launch"
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -19,13 +20,24 @@ func main() {
 	calc := calc.Init(
 		conf.Now, conf.Content.Location.Lat, conf.Content.Location.Lon,
 	)
-	lg.Debug(
-		"run "+appName, logseal.F{
-			"calc": calc, "config": CLI.Conf, "log_level": CLI.LogLevel,
-		},
-	)
-	lg.Debug("full configuration layout", logseal.F{"config": fmt.Sprintf("%+v", conf)})
 
-	la := launch.Init(conf, calc, lg)
-	la.Run()
+	if CLI.Astro {
+		pprint(calc)
+	} else {
+		lg.Info(
+			"run "+appName, logseal.F{
+				"config": CLI.Conf, "log_level": CLI.LogLevel,
+			},
+		)
+		lg.Debug("full config", logseal.F{"config": fmt.Sprintf("%+v", conf)})
+		lg.Debug("astro calculations", logseal.F{"config": fmt.Sprintf("%+v", calc)})
+
+		la := launch.Init(conf, calc, lg)
+		la.Run()
+	}
+}
+
+func pprint(i interface{}) {
+	s, _ := json.MarshalIndent(i, "", "  ")
+	fmt.Println(string(s))
 }

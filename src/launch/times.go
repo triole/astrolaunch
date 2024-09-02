@@ -6,9 +6,9 @@ import (
 	str2duration "github.com/xhit/go-str2duration/v2"
 )
 
-func rangeFits(t1, t2 time.Time, rg time.Duration) (b bool) {
+func calcRangeDiff(t1, t2 time.Time, rg time.Duration) (diff time.Duration, b bool) {
 	b = false
-	diff := t2.Sub(t1)
+	diff = t2.Sub(t1)
 	if diff >= 0 {
 		b = diff.Seconds() <= rg.Seconds()
 	}
