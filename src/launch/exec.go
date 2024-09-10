@@ -38,10 +38,17 @@ func (la Launch) runCmd(cmdArr []string) ([]byte, int, error) {
 			}
 		}
 	}
+	by := stdBuffer.Bytes()
 	if err != nil {
 		la.Lg.IfErrError(
-			"exec failed", logseal.F{"cmd": cmdArr, "error": err},
+			"exec failed",
+			logseal.F{"cmd": cmdArr, "error": err, "output": string(by)},
+		)
+	} else {
+		la.Lg.Debug(
+			"exec successful",
+			logseal.F{"cmd": cmdArr, "error": err, "output": string(by)},
 		)
 	}
-	return stdBuffer.Bytes(), exitcode, err
+	return by, exitcode, err
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/triole/logseal"
 )
 
-func (la Launch) Run() {
+func (la Launch) Run() (programExitCode int) {
 	for _, op := range la.Conf.Content.Operations {
 		now := time.Now().UTC()
 		var diff time.Duration
@@ -23,11 +23,13 @@ func (la Launch) Run() {
 		}
 		if fits {
 			la.Lg.Info("exec operation", la.printOpStatus(op, diff, fits))
-			la.execute(op.Exec)
+			_, exitcode, _ := la.execute(op.Exec)
+			programExitCode += exitcode
 		} else {
 			la.Lg.Info("skip operation", la.printOpStatus(op, diff, fits))
 		}
 	}
+	return
 }
 
 func (la Launch) printOpStatus(op conf.Operation, diff time.Duration, fits bool) (f logseal.F) {
