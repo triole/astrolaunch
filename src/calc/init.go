@@ -8,7 +8,7 @@ import (
 )
 
 type Calc struct {
-	Sun map[string]time.Time
+	Sun map[string]time.Time `json:"sun"`
 }
 
 func Init(now time.Time, lat, lon float64) (calc Calc) {
