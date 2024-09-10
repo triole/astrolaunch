@@ -6,6 +6,7 @@ import (
 	"astrolaunch/src/launch"
 	"encoding/json"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/triole/logseal"
@@ -34,7 +35,9 @@ func main() {
 		lg.Debug("astro calculations", logseal.F{"config": fmt.Sprintf("%+v", calc)})
 
 		la := launch.Init(conf, calc, lg)
-		la.Run()
+		programExitCode := la.Run()
+		lg.Info("done", logseal.F{"occured_errors": programExitCode})
+		os.Exit(programExitCode)
 	}
 }
 
