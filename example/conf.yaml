@@ -15,4 +15,4 @@ operations:
     range: 300s
     exec:
       - ["date"]
-      - ["echo", "this is dust"]
+      - ["echo", "this is dusk"]
