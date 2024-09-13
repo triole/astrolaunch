@@ -9,20 +9,20 @@ Astrolaunch may get other event data in the future. For data listed below are av
 ```go mdox-exec="r -a"
 {
   "sun": {
-    "dawn": "2024-09-11T04:00:55.59912192Z",
-    "dusk": "2024-09-11T18:07:53.54798464Z",
-    "golden_hour": "2024-09-11T16:48:05.580553216Z",
-    "golden_hour_end": "2024-09-11T05:20:43.566553344Z",
-    "nadir": "2024-09-10T23:04:24.573553152Z",
-    "nautical_dawn": "2024-09-11T03:19:00.147990016Z",
-    "nautical_dusk": "2024-09-11T18:49:48.999116544Z",
-    "night": "2024-09-11T19:34:55.41903744Z",
-    "night_end": "2024-09-11T02:33:53.72806912Z",
-    "solar_noon": "2024-09-11T11:04:24.573553152Z",
-    "sunrise": "2024-09-11T04:35:39.378726656Z",
-    "sunrise_end": "2024-09-11T04:39:11.69851648Z",
-    "sunset": "2024-09-11T17:33:09.768379904Z",
-    "sunset_start": "2024-09-11T17:29:37.44859008Z"
+    "dawn": "2024-09-13T04:04:23.368704768Z",
+    "dusk": "2024-09-13T18:02:58.411746048Z",
+    "golden_hour": "2024-09-13T16:43:23.12418944Z",
+    "golden_hour_end": "2024-09-13T05:23:58.656261376Z",
+    "nadir": "2024-09-12T23:03:40.890225664Z",
+    "nautical_dawn": "2024-09-13T03:22:48.223920384Z",
+    "nautical_dusk": "2024-09-13T18:44:33.556530432Z",
+    "night": "2024-09-13T19:29:02.689830144Z",
+    "night_end": "2024-09-13T02:38:19.090620928Z",
+    "solar_noon": "2024-09-13T11:03:40.890225664Z",
+    "sunrise": "2024-09-13T04:38:57.901608704Z",
+    "sunrise_end": "2024-09-13T04:42:29.613193984Z",
+    "sunset": "2024-09-13T17:28:23.878842368Z",
+    "sunset_start": "2024-09-13T17:24:52.167256832Z"
   }
 }
 ```
@@ -66,4 +66,24 @@ operations:
     exec:
       - ["date"]
       - ["echo", "this is dusk"]
+```
+
+## Help
+
+```go mdox-exec="r -h"
+Usage: astrolaunch [flags]
+
+launch commands at sun rise, sun dawn or other astro related times
+
+Flags:
+  -h, --help                      Show context-sensitive help.
+  -c, --conf="/home/ole/.conf/astrolaunch/conf.yaml"
+                                  path to config file
+      --log-file="/dev/stdout"    log file
+  -a, --astro                     only print astro calculation results
+      --log-level="info"          log level
+      --log-no-colors             disable output colours, print plain text
+      --log-json                  enable json log, instead of text one
+  -n, --dry-run                   dry run, just print operations that would run
+  -V, --version-flag              display version
 ```
