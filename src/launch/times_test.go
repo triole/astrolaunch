@@ -45,7 +45,7 @@ func TestCalcRangeDiff(t *testing.T) {
 	assertCalcRangeDiff(
 		toTime("2024-01-03T08:00:00+01:00"),
 		toTime("2024-01-03T10:00:00+01:00"),
-		toDur("3h"), toDur("2m"), true, t,
+		toDur("2m"), toDur("3h"), true, t,
 	)
 }
 
