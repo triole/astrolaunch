@@ -6,13 +6,17 @@ location:
 operations:
   - name: test
     at: sun.dawn
-    range: 300s
+    range:
+      pre: 2m
+      post: 4h
     exec:
       - ["date"]
       - ["echo", "this is dawn"]
   - name: test
     at: sun.dusk
-    range: 300s
+    range:
+      pre: 2m
+      post: 4h
     exec:
       - ["date"]
       - ["echo", "this is dusk"]

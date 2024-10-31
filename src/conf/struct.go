@@ -26,8 +26,13 @@ type ConfContent struct {
 type Operation struct {
 	Name  string     `yaml:"name"`
 	At    string     `yaml:"at"`
-	Range string     `yaml:"range"`
+	Range Range      `yaml:"range"`
 	Exec  [][]string `yaml:"exec"`
+}
+
+type Range struct {
+	Pre  string `yaml:"pre"`
+	Post string `yaml:"post"`
 }
 
 type Location struct {

@@ -14,10 +14,16 @@ func (la Launch) Run() (programExitCode int) {
 		fits := false
 		at, err := la.Calc.GetTime(op.At)
 		if err == nil {
-			rangeDuration, err := str2dur(op.Range)
-			diff, fits = calcRangeDiff(now, at, rangeDuration)
-			if err == nil {
-			} else {
+			preRange, err := la.str2dur(op.Range.Pre)
+			if err != nil {
+				la.Lg.Warn(err)
+			}
+			postRange, err := la.str2dur(op.Range.Post)
+			if err != nil {
+				la.Lg.Warn(err)
+			}
+			diff, fits = la.calcRangeDiff(at, now, preRange, postRange)
+			if err != nil {
 				la.Lg.Warn(err)
 			}
 		}

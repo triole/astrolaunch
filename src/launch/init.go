@@ -20,3 +20,8 @@ func Init(conf conf.Conf, calc calc.Calc, lg logseal.Logseal) (la Launch) {
 		Lg:   lg,
 	}
 }
+
+func new() (la Launch) {
+	la.Lg = logseal.Init()
+	return
+}
