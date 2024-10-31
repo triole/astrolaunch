@@ -1,4 +1,4 @@
-# Astrolaunch
+# Astrolaunch ![build](https://github.com/triole/astrolaunch/actions/workflows/build.yaml/badge.svg) ![test](https://github.com/triole/astrolaunch/actions/workflows/test.yaml/badge.svg)
 
 ## Synopsis
 
@@ -9,20 +9,20 @@ Astrolaunch may get other event data in the future. For data listed below are av
 ```go mdox-exec="r -a"
 {
   "sun": {
-    "dawn": "2024-09-13T04:04:23.368704768Z",
-    "dusk": "2024-09-13T18:02:58.411746048Z",
-    "golden_hour": "2024-09-13T16:43:23.12418944Z",
-    "golden_hour_end": "2024-09-13T05:23:58.656261376Z",
-    "nadir": "2024-09-12T23:03:40.890225664Z",
-    "nautical_dawn": "2024-09-13T03:22:48.223920384Z",
-    "nautical_dusk": "2024-09-13T18:44:33.556530432Z",
-    "night": "2024-09-13T19:29:02.689830144Z",
-    "night_end": "2024-09-13T02:38:19.090620928Z",
-    "solar_noon": "2024-09-13T11:03:40.890225664Z",
-    "sunrise": "2024-09-13T04:38:57.901608704Z",
-    "sunrise_end": "2024-09-13T04:42:29.613193984Z",
-    "sunset": "2024-09-13T17:28:23.878842368Z",
-    "sunset_start": "2024-09-13T17:24:52.167256832Z"
+    "dawn": "2024-10-31T05:26:25.503906048Z",
+    "dusk": "2024-10-31T16:16:00.892179712Z",
+    "golden_hour": "2024-10-31T14:49:15.091085824Z",
+    "golden_hour_end": "2024-10-31T06:53:11.304999424Z",
+    "nadir": "2024-10-30T22:51:13.198042624Z",
+    "nautical_dawn": "2024-10-31T04:46:07.122052608Z",
+    "nautical_dusk": "2024-10-31T16:56:19.274032896Z",
+    "night": "2024-10-31T17:35:53.138203904Z",
+    "night_end": "2024-10-31T04:06:33.2578816Z",
+    "solar_noon": "2024-10-31T10:51:13.198042624Z",
+    "sunrise": "2024-10-31T06:02:23.352712704Z",
+    "sunrise_end": "2024-10-31T06:06:11.714579968Z",
+    "sunset": "2024-10-31T15:40:03.043373056Z",
+    "sunset_start": "2024-10-31T15:36:14.681505536Z"
   }
 }
 ```
@@ -56,13 +56,17 @@ location:
 operations:
   - name: test
     at: sun.dawn
-    range: 300s
+    range:
+      pre: 2m
+      post: 4h
     exec:
       - ["date"]
       - ["echo", "this is dawn"]
   - name: test
     at: sun.dusk
-    range: 300s
+    range:
+      pre: 2m
+      post: 4h
     exec:
       - ["date"]
       - ["echo", "this is dusk"]
