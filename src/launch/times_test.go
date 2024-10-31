@@ -32,6 +32,21 @@ func TestCalcRangeDiff(t *testing.T) {
 		toTime("2024-01-03T08:00:00+01:00"),
 		toDur("1h"), toDur("2m"), false, t,
 	)
+	assertCalcRangeDiff(
+		toTime("2024-01-03T08:00:00+01:00"),
+		toTime("2024-01-03T10:00:00+01:00"),
+		toDur("1h"), toDur("2m"), false, t,
+	)
+	assertCalcRangeDiff(
+		toTime("2024-01-03T10:00:00+01:00"),
+		toTime("2024-01-03T08:00:00+01:00"),
+		toDur("3h"), toDur("2m"), true, t,
+	)
+	assertCalcRangeDiff(
+		toTime("2024-01-03T08:00:00+01:00"),
+		toTime("2024-01-03T10:00:00+01:00"),
+		toDur("3h"), toDur("2m"), true, t,
+	)
 }
 
 func assertCalcRangeDiff(t1, t2 time.Time, r1, r2 time.Duration, exp bool, t *testing.T) {
@@ -39,8 +54,8 @@ func assertCalcRangeDiff(t1, t2 time.Time, r1, r2 time.Duration, exp bool, t *te
 	diff, match := la.calcRangeDiff(t1, t2, r1, r2)
 	if match != exp {
 		t.Errorf(
-			"calcRangeDiff fail: %v, %v, %v, %v, diff: %v",
-			la.printTime(t1), la.printTime(t2), r1, r2, diff,
+			"calcRangeDiff fail: %v, %v, %v, %v, diff: %v, match: %v",
+			la.printTime(t1), la.printTime(t2), r1, r2, diff, match,
 		)
 	}
 }
