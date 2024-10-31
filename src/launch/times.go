@@ -10,10 +10,12 @@ import (
 func (la Launch) calcRangeDiff(t1, t2 time.Time, preRange, postRange time.Duration) (diff time.Duration, b bool) {
 	diff = t2.Sub(t1)
 	diffSec := diff.Seconds()
-	b = diffSec >= -(preRange.Seconds()) && diffSec <= postRange.Seconds()
+	preSec := -(preRange.Seconds())
+	postSec := postRange.Seconds()
+	b = preSec <= diffSec && diffSec <= postSec
 	la.Lg.Debug(
 		"calc range diff",
-		logseal.F{"t1": t1, "t2": t2, "rpre": preRange, "rpost": postRange, "diff_in_s": diffSec},
+		logseal.F{"t1": t1, "t2": t2, "rpre": preSec, "rpost": postSec, "diff": diffSec},
 	)
 	return
 }

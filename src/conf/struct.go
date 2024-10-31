@@ -24,10 +24,11 @@ type ConfContent struct {
 	Operations []Operation `yaml:"operations"`
 }
 type Operation struct {
-	Name  string     `yaml:"name"`
-	At    string     `yaml:"at"`
-	Range Range      `yaml:"range"`
-	Exec  [][]string `yaml:"exec"`
+	Name   string `yaml:"name"`
+	At     string `yaml:"at"`
+	AtTime time.Time
+	Range  Range      `yaml:"range"`
+	Exec   [][]string `yaml:"exec"`
 }
 
 type Range struct {
