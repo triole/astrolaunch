@@ -14,7 +14,12 @@ func (la Launch) Run() (programExitCode int) {
 		var diff time.Duration
 		fits := false
 		op.AtTime, err = la.Calc.GetTime(op.At)
-		if err == nil {
+		if err != nil {
+			la.Lg.Warn(
+				"operation skipped to due value fetch error",
+				logseal.F{"error": err, "operation_name": op.Name},
+			)
+		} else {
 			preRange, err := la.str2dur(op.Range.Pre)
 			if err != nil {
 				la.Lg.Warn(err)
@@ -27,13 +32,13 @@ func (la Launch) Run() (programExitCode int) {
 			if err != nil {
 				la.Lg.Warn(err)
 			}
-		}
-		if fits {
-			la.Lg.Info("exec operation", la.printOpStatus(op, diff, fits))
-			_, exitcode, _ := la.execute(op.Exec)
-			programExitCode += exitcode
-		} else {
-			la.Lg.Info("skip operation", la.printOpStatus(op, diff, fits))
+			if fits {
+				la.Lg.Info("exec operation", la.printOpStatus(op, diff, fits))
+				_, exitcode, _ := la.execute(op.Exec)
+				programExitCode += exitcode
+			} else {
+				la.Lg.Info("skip operation", la.printOpStatus(op, diff, fits))
+			}
 		}
 	}
 	return

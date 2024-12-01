@@ -5,7 +5,7 @@ location:
 
 operations:
   - name: test
-    at: sun.dawn
+    at: suna.dawn
     range:
       pre: 2m
       post: 4h

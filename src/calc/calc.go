@@ -10,9 +10,16 @@ import (
 func (calc Calc) GetTime(ra string) (tim time.Time, err error) {
 	arr := strings.Split(ra, ".")
 	if len(arr) > 1 {
-		if strings.EqualFold(arr[0], "sun") {
-			tim, err = getVal(arr[1], calc.Sun.Light)
+		cond := strings.ToLower(arr[0])
+		switch cond {
+		case "sun":
+			tim, err = getVal(arr[1], calc.Sun)
+		case "moon":
+			tim, err = getVal(arr[1], calc.Moon)
 		}
+	}
+	if tim.Unix() < 0 {
+		err = errors.New("no astro event time for '" + arr[0] + "'")
 	}
 	tim = toLocalTime(tim)
 	return

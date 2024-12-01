@@ -3,10 +3,10 @@ package calc
 import "time"
 
 type Calc struct {
-	Time     tTime     `json:"time" toml:"time" yaml:"time"`
-	Location tLocation `json:"location" toml:"location" yaml:"location"`
-	Sun      tSun      `json:"sun" toml:"sun" yaml:"sun"`
-	Moon     tMoon     `json:"moon" toml:"moon" yaml:"moon"`
+	Time     tTime      `json:"time" toml:"time" yaml:"time"`
+	Location tLocation  `json:"location" toml:"location" yaml:"location"`
+	Sun      tSunLight  `json:"sun" toml:"sun" yaml:"sun"`
+	Moon     tMoonLight `json:"moon" toml:"moon" yaml:"moon"`
 }
 
 type tTime struct {
@@ -19,27 +19,11 @@ type tLocation struct {
 	Lon float64 `json:"lon" toml:"lon" yaml:"lon"`
 }
 
-type tSun struct {
-	Light    tSunLight `json:"light" toml:"light" yaml:"light"`
-	Position tPosition `json:"position" toml:"position" yaml:"position"`
-}
-
-type tMoon struct {
-	Light        tMoonLight        `json:"light" toml:"light" yaml:"light"`
-	Position     tPosition         `json:"position" toml:"position" yaml:"position"`
-	Illumination tMoonIllumination `json:"illumination" toml:"illumination" yaml:"illumination"`
-}
-
 type tSunLight map[string]time.Time
-type tMoonLight map[string]interface{}
-type tMoonIllumination map[string]interface{}
-type tPosition map[string]float64
+type tMoonLight map[string]time.Time
 
 func newDataset() (ds Calc) {
-	ds.Sun.Light = make(tSunLight)
-	ds.Sun.Position = make(tPosition)
-	ds.Moon.Light = make(tMoonLight)
-	ds.Moon.Position = make(tPosition)
-	ds.Moon.Illumination = make(tMoonIllumination)
+	ds.Sun = make(tSunLight)
+	ds.Moon = make(tMoonLight)
 	return
 }
