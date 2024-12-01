@@ -11,7 +11,7 @@ func (calc Calc) GetTime(ra string) (tim time.Time, err error) {
 	arr := strings.Split(ra, ".")
 	if len(arr) > 1 {
 		if strings.EqualFold(arr[0], "sun") {
-			tim, err = getVal(arr[1], calc.Sun)
+			tim, err = getVal(arr[1], calc.Sun.Light)
 		}
 	}
 	tim = toLocalTime(tim)
