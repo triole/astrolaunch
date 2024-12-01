@@ -14,8 +14,13 @@ import (
 
 func main() {
 	parseArgs()
-	now := time.Now()
 	lg := logseal.Init(CLI.LogLevel, CLI.LogFile, CLI.LogNoColors, CLI.LogJSON)
+	now := time.Now()
+	if CLI.Date != "" {
+		tim, err := time.Parse("20060102", CLI.Date)
+		lg.IfErrFatal("can not parse date string, use format YYYYMMDD", logseal.F{"error": err, "string": CLI.Date})
+		now = tim
+	}
 	conf := conf.Init(now, CLI.Conf, lg)
 	conf.DryRun = CLI.DryRun
 	calc := calc.Init(

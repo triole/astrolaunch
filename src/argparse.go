@@ -22,6 +22,7 @@ var CLI struct {
 	Conf        string `help:"path to config file" short:"c" default:"${configFile}"`
 	LogFile     string `help:"log file" default:"/dev/stdout"`
 	Astro       bool   `help:"only print astro calculation results" short:"a"`
+	Date        string `help:"print astro calculation for a certain date, format: YYYYMMDD" short:"d"`
 	LogLevel    string `help:"log level" default:"info" enum:"trace,debug,info,error"`
 	LogNoColors bool   `help:"disable output colours, print plain text"`
 	LogJSON     bool   `help:"enable json log, instead of text one"`
