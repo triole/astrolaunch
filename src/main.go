@@ -30,7 +30,6 @@ func main() {
 				"config": CLI.Conf, "log_level": CLI.LogLevel,
 			},
 		)
-		fmt.Printf("%+v\n", conf)
 		lg.Debug("full config", logseal.F{"config": fmt.Sprintf("%+v", conf)})
 		lg.Debug("astro calculations", logseal.F{"config": fmt.Sprintf("%+v", calc)})
 
