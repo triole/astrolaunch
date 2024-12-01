@@ -6,23 +6,23 @@ Astrolaunch is able to run commands based on the position of the sun. It compare
 
 Astrolaunch may get other event data in the future. For data listed below are available.
 
-```go mdox-exec="r -a"
+```go mdox-exec="r -a -d 20240601"
 {
   "sun": {
-    "dawn": "2024-10-31T05:26:25.503906048Z",
-    "dusk": "2024-10-31T16:16:00.892179712Z",
-    "golden_hour": "2024-10-31T14:49:15.091085824Z",
-    "golden_hour_end": "2024-10-31T06:53:11.304999424Z",
-    "nadir": "2024-10-30T22:51:13.198042624Z",
-    "nautical_dawn": "2024-10-31T04:46:07.122052608Z",
-    "nautical_dusk": "2024-10-31T16:56:19.274032896Z",
-    "night": "2024-10-31T17:35:53.138203904Z",
-    "night_end": "2024-10-31T04:06:33.2578816Z",
-    "solar_noon": "2024-10-31T10:51:13.198042624Z",
-    "sunrise": "2024-10-31T06:02:23.352712704Z",
-    "sunrise_end": "2024-10-31T06:06:11.714579968Z",
-    "sunset": "2024-10-31T15:40:03.043373056Z",
-    "sunset_start": "2024-10-31T15:36:14.681505536Z"
+    "dawn": "2024-06-01T02:03:10.163053568Z",
+    "dusk": "2024-06-01T20:08:15.888291328Z",
+    "golden_hour": "2024-06-01T18:26:13.681104128Z",
+    "golden_hour_end": "2024-06-01T03:45:12.370240768Z",
+    "nadir": "2024-05-31T23:05:43.025672448Z",
+    "nautical_dawn": "2024-06-01T00:49:58.605823488Z",
+    "nautical_dusk": "2024-06-01T21:21:27.445521152Z",
+    "night": "0001-01-01T00:00:00Z",
+    "night_end": "0001-01-01T00:00:00Z",
+    "solar_noon": "2024-06-01T11:05:43.025672448Z",
+    "sunrise": "2024-06-01T02:50:47.40565248Z",
+    "sunrise_end": "2024-06-01T02:55:18.451255552Z",
+    "sunset": "2024-06-01T19:20:38.64569216Z",
+    "sunset_start": "2024-06-01T19:16:07.600089344Z"
   }
 }
 ```
@@ -85,6 +85,8 @@ Flags:
                                   path to config file
       --log-file="/dev/stdout"    log file
   -a, --astro                     only print astro calculation results
+  -d, --date=STRING               print astro calculation for a certain date,
+                                  format: YYYYMMDD
       --log-level="info"          log level
       --log-no-colors             disable output colours, print plain text
       --log-json                  enable json log, instead of text one
