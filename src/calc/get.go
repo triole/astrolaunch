@@ -14,7 +14,18 @@ func (calc Calc) GetTime(ra string) (tim time.Time, err error) {
 			tim, err = getVal(arr[1], calc.Sun)
 		}
 	}
+	tim = toLocalTime(tim)
 	return
+}
+
+func toLocalTime(inp time.Time) time.Time {
+	now := time.Now()
+	location := now.Location()
+	loc, err := time.LoadLocation(location.String())
+	if err != nil {
+		panic(err)
+	}
+	return inp.In(loc)
 }
 
 func getVal(s string, m map[string]time.Time) (val time.Time, err error) {
