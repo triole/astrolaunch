@@ -15,7 +15,7 @@ func Init(now time.Time, lat, lon float64) (calc Calc) {
 	calc.Sun = make(map[string]time.Time)
 	arr := suncalc.GetTimes(now, lat, lon)
 	for key, val := range arr {
-		calc.Sun[toSnakeCase(string(key))] = val.Value
+		calc.Sun[toSnakeCase(string(key))] = toLocalTime(val.Value)
 	}
 	return
 }
