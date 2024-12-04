@@ -28,8 +28,9 @@ func main() {
 	)
 
 	if CLI.Astro {
+		var add int
 		for i := 0; i <= CLI.Range; i++ {
-			add := i
+			add = 1
 			if i == 0 {
 				add = 0
 			}
