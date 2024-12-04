@@ -21,24 +21,35 @@ func main() {
 		lg.IfErrFatal("can not parse date string, use format YYYYMMDD", logseal.F{"error": err, "string": CLI.Date})
 		now = tim
 	}
-	conf := conf.Init(now, CLI.Conf, lg)
-	conf.DryRun = CLI.DryRun
-	calc := calc.Init(
-		conf.Now.UTC, conf.Content.Location.Lat, conf.Content.Location.Lon,
+	cnf := conf.Init(now, CLI.Conf, lg)
+	cnf.DryRun = CLI.DryRun
+	clc := calc.Init(
+		cnf.Now.UTC, cnf.Content.Location.Lat, cnf.Content.Location.Lon,
 	)
 
 	if CLI.Astro {
-		pprint(calc)
+		for i := 0; i <= CLI.Range; i++ {
+			add := i
+			if i == 0 {
+				add = 0
+			}
+			now = now.AddDate(0, 0, add)
+			cnf := conf.Init(now, CLI.Conf, lg)
+			clc := calc.Init(
+				cnf.Now.UTC, cnf.Content.Location.Lat, cnf.Content.Location.Lon,
+			)
+			pprint(clc)
+		}
 	} else {
 		lg.Info(
 			"run "+appName, logseal.F{
 				"config": CLI.Conf, "log_level": CLI.LogLevel,
 			},
 		)
-		lg.Debug("full config", logseal.F{"config": fmt.Sprintf("%+v", conf)})
-		lg.Debug("astro calculations", logseal.F{"config": fmt.Sprintf("%+v", calc)})
+		lg.Debug("full config", logseal.F{"config": fmt.Sprintf("%+v", cnf)})
+		lg.Debug("astro calculations", logseal.F{"config": fmt.Sprintf("%+v", clc)})
 
-		la := launch.Init(conf, calc, lg)
+		la := launch.Init(cnf, clc, lg)
 		programExitCode := la.Run()
 		lg.Info("done", logseal.F{"occured_errors": programExitCode})
 		os.Exit(programExitCode)
