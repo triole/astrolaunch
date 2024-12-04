@@ -29,6 +29,7 @@ func main() {
 
 	if CLI.Astro {
 		var add int
+		var res []calc.Calc
 		for i := 0; i <= CLI.Range; i++ {
 			add = 1
 			if i == 0 {
@@ -39,7 +40,12 @@ func main() {
 			clc := calc.Init(
 				cnf.Now.UTC, cnf.Content.Location.Lat, cnf.Content.Location.Lon,
 			)
-			pprint(clc)
+			res = append(res, clc)
+		}
+		if CLI.Range == 0 {
+			pprint(res[0])
+		} else {
+			pprint(res)
 		}
 	} else {
 		lg.Info(
