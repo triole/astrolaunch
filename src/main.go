@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"path/filepath"
 	"time"
 
 	"github.com/triole/logseal"
@@ -49,13 +48,9 @@ func main() {
 			pprint(res)
 		}
 	} else {
-		confFileName, err := filepath.Abs(CLI.Conf)
-		lg.IfErrFatal(
-			"unable to determine absolute path", logseal.F{"path": CLI.Conf, "error": err},
-		)
 		lg.Info(
 			"run "+appName, logseal.F{
-				"config": confFileName, "log_level": CLI.LogLevel,
+				"config": cnf.FileName, "log_level": CLI.LogLevel,
 			},
 		)
 		lg.Debug("full config", logseal.F{"config": fmt.Sprintf("%+v", cnf)})
