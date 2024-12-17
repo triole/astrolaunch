@@ -21,7 +21,7 @@ func main() {
 		lg.IfErrFatal("can not parse date string, use format YYYYMMDD", logseal.F{"error": err, "string": CLI.Date})
 		now = tim
 	}
-	cnf := conf.Init(now, CLI.Conf, lg)
+	cnf := conf.Init(now, CLI.Conf, CLI.Filter, lg)
 	cnf.DryRun = CLI.DryRun
 	clc := calc.Init(
 		cnf.Now.UTC, cnf.Content.Location.Lat, cnf.Content.Location.Lon,
@@ -36,7 +36,7 @@ func main() {
 				add = 0
 			}
 			now = now.AddDate(0, 0, add)
-			cnf := conf.Init(now, CLI.Conf, lg)
+			cnf := conf.Init(now, CLI.Conf, CLI.Filter, lg)
 			clc := calc.Init(
 				cnf.Now.UTC, cnf.Content.Location.Lat, cnf.Content.Location.Lon,
 			)

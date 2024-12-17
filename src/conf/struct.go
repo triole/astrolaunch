@@ -22,6 +22,7 @@ type Now struct {
 type ConfContent struct {
 	OpsDir     string   `yaml:"operations_dir"`
 	Location   Location `yaml:"location"`
+	OpsFilter  string
 	OpsList    []string
 	Operations []Operation
 }

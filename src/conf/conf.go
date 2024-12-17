@@ -7,7 +7,7 @@ import (
 	yaml "gopkg.in/yaml.v3"
 )
 
-func (conf Conf) readConf() (content ConfContent) {
+func (conf Conf) readConf(opsFilter string) (content ConfContent) {
 	by, err := os.ReadFile(conf.FileName)
 	conf.Lg.IfErrFatal(
 		"can not read file", logseal.F{"path": conf.FileName, "error": err},
@@ -20,7 +20,8 @@ func (conf Conf) readConf() (content ConfContent) {
 	conf.Lg.IfErrFatal(
 		"can not unmarshal config", logseal.F{"path": conf.FileName, "error": err},
 	)
-	content.OpsList, err = conf.find(content.OpsDir, `\.yam?l$`)
+	content.OpsFilter = opsFilter
+	content.OpsList, err = conf.find(content.OpsDir, content.OpsFilter+".*\\.yam?l$")
 	conf.Lg.IfErrFatal(
 		"find operations failed", logseal.F{"path": conf.FileName, "opsdir": content.OpsDir, "error": err},
 	)
