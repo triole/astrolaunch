@@ -1,6 +1,7 @@
 package conf
 
 import (
+	"fmt"
 	"path/filepath"
 	"time"
 
@@ -17,5 +18,7 @@ func Init(now time.Time, confFile string, lg logseal.Logseal) (conf Conf) {
 	conf.FileName = confFile
 	conf.Lg = lg
 	conf.Content = conf.readConf()
+
+	fmt.Printf("==== %+v\n", conf.Content)
 	return
 }

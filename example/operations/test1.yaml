@@ -1,0 +1,9 @@
+---
+name: test
+at: suna.dawn
+range:
+  pre: 2m
+  post: 4h
+exec:
+  - ["date"]
+  - ["echo", "this is dawn"]

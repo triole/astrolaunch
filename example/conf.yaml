@@ -1,22 +1,6 @@
 ---
+operations_dir: "{{.SELFDIR}}/operations"
+
 location:
   lat: 51.50808063275697
   lon: -0.12806528535354245
-
-operations:
-  - name: test
-    at: suna.dawn
-    range:
-      pre: 2m
-      post: 4h
-    exec:
-      - ["date"]
-      - ["echo", "this is dawn"]
-  - name: test
-    at: sun.dusk
-    range:
-      pre: 2m
-      post: 4h
-    exec:
-      - ["date"]
-      - ["echo", "this is dusk"]

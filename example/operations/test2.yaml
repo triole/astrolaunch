@@ -1,0 +1,9 @@
+---
+name: test
+at: sun.dusk
+range:
+  pre: 2m
+  post: 4h
+exec:
+  - ["date"]
+  - ["echo", "this is dusk"]
