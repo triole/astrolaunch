@@ -6,23 +6,34 @@ Astrolaunch is able to run commands based on the position of the sun. It compare
 
 Astrolaunch may get other event data in the future. For data listed below are available.
 
-```go mdox-exec="r -a -d 20240601"
+```go mdox-exec="r calc -d 20240601"
 {
+  "time": {
+    "time": "2024-12-18T07:45:12.422695577Z"
+  },
+  "location": {
+    "lat": 0,
+    "lon": 0
+  },
   "sun": {
-    "dawn": "2024-06-01T04:03:10.163053568+02:00",
-    "dusk": "2024-06-01T22:08:15.888291328+02:00",
-    "golden_hour": "2024-06-01T20:26:13.681104128+02:00",
-    "golden_hour_end": "2024-06-01T05:45:12.370240768+02:00",
-    "nadir": "2024-06-01T01:05:43.025672448+02:00",
-    "nautical_dawn": "2024-06-01T02:49:58.605823488+02:00",
-    "nautical_dusk": "2024-06-01T23:21:27.445521152+02:00",
-    "night": "0001-01-01T00:53:28+00:53",
-    "night_end": "0001-01-01T00:53:28+00:53",
-    "solar_noon": "2024-06-01T13:05:43.025672448+02:00",
-    "sunrise": "2024-06-01T04:50:47.40565248+02:00",
-    "sunrise_end": "2024-06-01T04:55:18.451255552+02:00",
-    "sunset": "2024-06-01T21:20:38.64569216+02:00",
-    "sunset_start": "2024-06-01T21:16:07.600089344+02:00"
+    "dawn": "2024-12-18T06:31:54.012846336+01:00",
+    "dusk": "2024-12-18T19:24:13.114789888+01:00",
+    "golden_hour": "2024-12-18T18:31:54.012886528+01:00",
+    "golden_hour_end": "2024-12-18T07:24:13.11474944+01:00",
+    "nadir": "2024-12-18T00:58:03.56381824+01:00",
+    "nautical_dawn": "2024-12-18T06:05:41.15314176+01:00",
+    "nautical_dusk": "2024-12-18T19:50:25.974494208+01:00",
+    "night": "2024-12-18T20:16:45.822935808+01:00",
+    "night_end": "2024-12-18T05:39:21.304700416+01:00",
+    "solar_noon": "2024-12-18T12:58:03.56381824+01:00",
+    "sunrise": "2024-12-18T06:54:25.73132416+01:00",
+    "sunrise_end": "2024-12-18T06:56:45.113187584+01:00",
+    "sunset": "2024-12-18T19:01:41.396311808+01:00",
+    "sunset_start": "2024-12-18T18:59:22.01444864+01:00"
+  },
+  "moon": {
+    "rise": "2024-12-18T21:00:00Z",
+    "set": "2024-12-18T08:00:00Z"
   }
 }
 ```
@@ -49,33 +60,21 @@ Let's say astrolaunch is run two minutes before `sun.dusk`. Only if `range` is a
 ## Configuration
 
 ```go mdox-exec="tail -n+2 example/conf.yaml"
+operations_dir: "{{.SELFDIR}}/operations"
+
 location:
   lat: 51.50808063275697
   lon: -0.12806528535354245
 
-operations:
-  - name: test
-    at: sun.dawn
-    range:
-      pre: 2m
-      post: 4h
-    exec:
-      - ["date"]
-      - ["echo", "this is dawn"]
-  - name: test
-    at: sun.dusk
-    range:
-      pre: 2m
-      post: 4h
-    exec:
-      - ["date"]
-      - ["echo", "this is dusk"]
+default_range:
+  pre: 2m
+  post: 10m
 ```
 
 ## Help
 
 ```go mdox-exec="r -h"
-Usage: astrolaunch [flags]
+Usage: astrolaunch <command> [flags]
 
 launch commands at sun rise, sun dawn or other astro related times
 
@@ -84,12 +83,16 @@ Flags:
   -c, --conf="/home/ole/.conf/astrolaunch/conf.yaml"
                                   path to config file
       --log-file="/dev/stdout"    log file
-  -a, --astro                     only print astro calculation results
-  -d, --date=STRING               print astro calculation for a certain date,
-                                  format: YYYYMMDD
       --log-level="info"          log level
       --log-no-colors             disable output colours, print plain text
       --log-json                  enable json log, instead of text one
   -n, --dry-run                   dry run, just print operations that would run
   -V, --version-flag              display version
+
+Commands:
+  calc    list files matching the criteria
+  exec    execute command, if event trigger matches
+  ops     list files matching the criteria
+
+Run "astrolaunch <command> --help" for more information on a command.
 ```
