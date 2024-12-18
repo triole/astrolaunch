@@ -7,8 +7,8 @@ import (
 	"github.com/triole/logseal"
 )
 
-func Init(now time.Time, confFile, opsFilter string, dryrun bool, lg logseal.Logseal) (conf Conf) {
-	conf.SetNow(now)
+func Init(confFile string, dryrun bool, lg logseal.Logseal) (conf Conf) {
+	conf.SetNow(time.Now())
 	confFile, err := filepath.Abs(confFile)
 	lg.IfErrFatal(
 		"unable to determine absolute path", logseal.F{"path": confFile, "error": err},

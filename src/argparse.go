@@ -18,25 +18,35 @@ var (
 	appMainversion = "0.1"
 )
 
-var CLI struct {
+var cli struct {
+	Action      string `kong:"-" enum:"conf,exec,calc" default:"conf"`
 	Conf        string `help:"path to config file" short:"c" default:"${configFile}"`
-	Filter      string `help:"only execute operations whose conf files match the regex filter" short:"f" default:".*"`
 	LogFile     string `help:"log file" default:"/dev/stdout"`
-	Astro       bool   `help:"only print astro calculation results" short:"a"`
-	Date        string `help:"print astro calculation for a certain date, format: YYYYMMDD, [use with -a]" short:"d"`
-	Range       int    `help:"range of days, astro calculation for a multiple days, [use with -a]" short:"r"`
 	LogLevel    string `help:"log level" default:"info" enum:"trace,debug,info,error"`
 	LogNoColors bool   `help:"disable output colours, print plain text"`
 	LogJSON     bool   `help:"enable json log, instead of text one"`
 	DryRun      bool   `help:"dry run, just print operations that would run" short:"n"`
 	VersionFlag bool   `help:"display version" short:"V"`
+
+	Calc struct {
+		Date  string `help:"print astro calculation for a certain date, format: YYYYMMDD, [use with -a]" short:"d"`
+		Range int    `help:"range of days, astro calculation for a multiple days, [use with -a]" short:"r"`
+	} `cmd:"" help:"list files matching the criteria"`
+
+	Exec struct {
+		At string `help:"event at which exec should trigger" short:"a"`
+	} `cmd:"" help:"execute command, if event trigger matches"`
+
+	Ops struct {
+		Filter string `help:"only execute operations whose conf files match the regex filter" short:"f" default:".*"`
+	} `cmd:"" help:"list files matching the criteria"`
 }
 
 func parseArgs() {
 	userdata := getUserdataMap()
 	defaultConfigFolder := path.Join(userdata["home"], ".conf", appName)
 
-	ctx := kong.Parse(&CLI,
+	ctx := kong.Parse(&cli,
 		kong.Name(appName),
 		kong.Description(appDescription),
 		kong.UsageOnError(),
@@ -49,12 +59,12 @@ func parseArgs() {
 		},
 	)
 	_ = ctx.Run()
-
-	if CLI.VersionFlag {
+	// ctx.FatalIfErrorf(err)
+	cli.Action = strings.Split(ctx.Command(), " ")[0]
+	if cli.Action == "version" {
 		printBuildTags(BUILDTAGS)
 		os.Exit(0)
 	}
-	// ctx.FatalIfErrorf(err)
 }
 
 func printBuildTags(buildtags string) {

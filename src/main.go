@@ -7,29 +7,28 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/triole/logseal"
 )
 
 func main() {
 	parseArgs()
-	lg := logseal.Init(CLI.LogLevel, CLI.LogFile, CLI.LogNoColors, CLI.LogJSON)
-	now := time.Now()
-	if CLI.Date != "" {
-		tim, err := time.Parse("20060102", CLI.Date)
-		lg.IfErrFatal("can not parse date string, use format YYYYMMDD", logseal.F{"error": err, "string": CLI.Date})
-		now = tim
-	}
-	cnf := conf.Init(now, CLI.Conf, CLI.Filter, CLI.DryRun, lg)
+	lg := logseal.Init(cli.LogLevel, cli.LogFile, cli.LogNoColors, cli.LogJSON)
+	// if cli.Date != "" {
+	// 	tim, err := time.Parse("20060102", cli.Date)
+	// 	lg.IfErrFatal("can not parse date string, use format YYYYMMDD", logseal.F{"error": err, "string": cli.Date})
+	// 	now = tim
+	// }
+	cnf := conf.Init(cli.Conf, cli.DryRun, lg)
 	clc := calc.Init(
 		cnf.Now.UTC, cnf.Content.Location.Lat, cnf.Content.Location.Lon,
 	)
 
-	if CLI.Astro {
+	switch cli.Action {
+	case "calc":
 		var add int
 		var res []calc.Calc
-		for i := 0; i <= CLI.Range; i++ {
+		for i := 0; i <= cli.Calc.Range; i++ {
 			add = 1
 			if i == 0 {
 				add = 0
@@ -40,15 +39,20 @@ func main() {
 			)
 			res = append(res, clc)
 		}
-		if CLI.Range == 0 {
+		if cli.Calc.Range == 0 {
 			pprint(res[0])
 		} else {
 			pprint(res)
 		}
-	} else {
+	case "exec":
+		fmt.Println("Tomorrow.")
+	case "ops":
+		cnf.OpsFilter = cli.Ops.Filter
+		cnf.ReadConf()
+		cnf.ReadOps()
 		lg.Info(
 			"run "+appName, logseal.F{
-				"config": cnf.FileName, "log_level": CLI.LogLevel,
+				"config": cnf.FileName, "log_level": cli.LogLevel,
 			},
 		)
 		lg.Debug("full config", logseal.F{"config": fmt.Sprintf("%+v", cnf)})

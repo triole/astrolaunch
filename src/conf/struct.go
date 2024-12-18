@@ -7,11 +7,12 @@ import (
 )
 
 type Conf struct {
-	Now      Now
-	FileName string
-	Content  ConfContent
-	Lg       logseal.Logseal
-	DryRun   bool
+	Now       Now
+	FileName  string
+	OpsFilter string
+	Content   ConfContent
+	Lg        logseal.Logseal
+	DryRun    bool
 }
 
 type Now struct {
@@ -23,7 +24,6 @@ type ConfContent struct {
 	OpsDir       string   `yaml:"operations_dir"`
 	Location     Location `yaml:"location"`
 	DefaultRange Range    `yaml:"default_range"`
-	OpsFilter    string
 	OpsList      []string
 	Operations   []Operation
 }
