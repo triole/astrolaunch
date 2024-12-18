@@ -26,7 +26,14 @@ func (conf Conf) readConf(opsFilter string) (content ConfContent) {
 		"find operations failed", logseal.F{"path": conf.FileName, "opsdir": content.OpsDir, "error": err},
 	)
 	for _, el := range content.OpsList {
-		content.Operations = append(content.Operations, conf.readOp(el))
+		op := conf.readOp(el)
+		if op.Range.Pre == "" {
+			op.Range.Pre = content.DefaultRange.Pre
+		}
+		if op.Range.Post == "" {
+			op.Range.Post = content.DefaultRange.Post
+		}
+		content.Operations = append(content.Operations, op)
 	}
 	return content
 }

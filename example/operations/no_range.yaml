@@ -1,0 +1,6 @@
+---
+name: test
+at: sun.sunset
+exec:
+  - ["date"]
+  - ["echo", "this is sunset"]

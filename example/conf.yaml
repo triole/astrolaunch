@@ -4,3 +4,7 @@ operations_dir: "{{.SELFDIR}}/operations"
 location:
   lat: 51.50808063275697
   lon: -0.12806528535354245
+
+default_range:
+  pre: 2m
+  post: 10m

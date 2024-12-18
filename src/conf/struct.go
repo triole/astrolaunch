@@ -20,11 +20,12 @@ type Now struct {
 }
 
 type ConfContent struct {
-	OpsDir     string   `yaml:"operations_dir"`
-	Location   Location `yaml:"location"`
-	OpsFilter  string
-	OpsList    []string
-	Operations []Operation
+	OpsDir       string   `yaml:"operations_dir"`
+	Location     Location `yaml:"location"`
+	DefaultRange Range    `yaml:"default_range"`
+	OpsFilter    string
+	OpsList      []string
+	Operations   []Operation
 }
 type Operation struct {
 	Name   string `yaml:"name"`
