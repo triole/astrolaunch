@@ -54,7 +54,7 @@ func main() {
 			},
 		)
 		lg.Debug("full config", logseal.F{"config": fmt.Sprintf("%+v", cnf)})
-		lg.Debug("astro calculations", logseal.F{"config": fmt.Sprintf("%+v", clc)})
+		lg.Debug("astro calculations", logseal.F{"calc": fmt.Sprintf("%+v", clc)})
 
 		la := launch.Init(cnf, clc, lg)
 		programExitCode := la.Run()
