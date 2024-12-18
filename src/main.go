@@ -19,6 +19,7 @@ func main() {
 	clc := calc.Init(
 		cnf.Now.UTC, cnf.Content.Location.Lat, cnf.Content.Location.Lon,
 	)
+	cnf.ReadConf()
 
 	if cli.Action == "calc" {
 		var add int
@@ -51,7 +52,6 @@ func main() {
 	}
 
 	if cli.Action == "exec" {
-		cnf.ReadConf()
 		var op conf.Operation
 		op.Exec = [][]string{cli.Exec.Cmd}
 		op.At = cli.Exec.At
@@ -68,7 +68,6 @@ func main() {
 
 	if cli.Action == "ops" {
 		cnf.OpsFilter = cli.Ops.Filter
-		cnf.ReadConf()
 		cnf.ReadOps()
 		lg.Info(
 			"run "+appName, logseal.F{
