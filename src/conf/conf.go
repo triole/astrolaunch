@@ -2,12 +2,13 @@ package conf
 
 import (
 	"os"
+	"time"
 
 	"github.com/triole/logseal"
 	yaml "gopkg.in/yaml.v3"
 )
 
-func (conf Conf) readConf(opsFilter string) (content ConfContent) {
+func (conf *Conf) ReadConf(opsFilter string) {
 	by, err := os.ReadFile(conf.FileName)
 	conf.Lg.IfErrFatal(
 		"can not read file", logseal.F{"path": conf.FileName, "error": err},
@@ -16,26 +17,31 @@ func (conf Conf) readConf(opsFilter string) (content ConfContent) {
 	conf.Lg.IfErrFatal(
 		"can not expand config variables", logseal.F{"path": conf.FileName, "error": err},
 	)
-	err = yaml.Unmarshal(by, &content)
+	err = yaml.Unmarshal(by, &conf.Content)
 	conf.Lg.IfErrFatal(
 		"can not unmarshal config", logseal.F{"path": conf.FileName, "error": err},
 	)
-	content.OpsFilter = opsFilter
-	content.OpsList, err = conf.find(content.OpsDir, content.OpsFilter+".*\\.yam?l$")
+	conf.Content.OpsFilter = opsFilter
+	conf.Content.OpsList, err = conf.find(conf.Content.OpsDir, conf.Content.OpsFilter+".*\\.yam?l$")
 	conf.Lg.IfErrFatal(
-		"find operations failed", logseal.F{"path": conf.FileName, "opsdir": content.OpsDir, "error": err},
+		"find operations failed",
+		logseal.F{
+			"path": conf.FileName, "opsdir": conf.Content.OpsDir, "error": err,
+		},
 	)
-	for _, el := range content.OpsList {
+}
+
+func (conf *Conf) ReadOps() {
+	for _, el := range conf.Content.OpsList {
 		op := conf.readOp(el)
 		if op.Range.Pre == "" {
-			op.Range.Pre = content.DefaultRange.Pre
+			op.Range.Pre = conf.Content.DefaultRange.Pre
 		}
 		if op.Range.Post == "" {
-			op.Range.Post = content.DefaultRange.Post
+			op.Range.Post = conf.Content.DefaultRange.Post
 		}
-		content.Operations = append(content.Operations, op)
+		conf.Content.Operations = append(conf.Content.Operations, op)
 	}
-	return content
 }
 
 func (conf Conf) readOp(fn string) (op Operation) {
@@ -52,4 +58,9 @@ func (conf Conf) readOp(fn string) (op Operation) {
 		"can not unmarshal config", logseal.F{"path": conf.FileName, "error": err},
 	)
 	return
+}
+
+func (conf *Conf) SetNow(tim time.Time) {
+	conf.Now.Local = tim
+	conf.Now.UTC = tim.UTC()
 }
