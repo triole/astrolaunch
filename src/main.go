@@ -24,8 +24,7 @@ func main() {
 		cnf.Now.UTC, cnf.Content.Location.Lat, cnf.Content.Location.Lon,
 	)
 
-	switch cli.Action {
-	case "calc":
+	if cli.Action == "calc" {
 		var add int
 		var res []calc.Calc
 		for i := 0; i <= cli.Calc.Range; i++ {
@@ -44,9 +43,26 @@ func main() {
 		} else {
 			pprint(res)
 		}
-	case "exec":
-		fmt.Println("Tomorrow.")
-	case "ops":
+		os.Exit(0)
+	}
+
+	if cli.Action == "exec" {
+		cnf.ReadConf()
+		var op conf.Operation
+		op.Exec = [][]string{cli.Exec.Cmd}
+		op.At = cli.Exec.At
+		op.Range.Pre = cnf.Content.DefaultRange.Pre
+		op.Range.Post = cnf.Content.DefaultRange.Post
+		if cli.Exec.Pre != "" {
+			op.Range.Pre = cli.Exec.Pre
+		}
+		if cli.Exec.Post != "" {
+			op.Range.Post = cli.Exec.Post
+		}
+		cnf.Content.Operations = append(cnf.Content.Operations, op)
+	}
+
+	if cli.Action == "ops" {
 		cnf.OpsFilter = cli.Ops.Filter
 		cnf.ReadConf()
 		cnf.ReadOps()
@@ -57,12 +73,12 @@ func main() {
 		)
 		lg.Debug("full config", logseal.F{"config": fmt.Sprintf("%+v", cnf)})
 		lg.Debug("astro calculations", logseal.F{"calc": fmt.Sprintf("%+v", clc)})
-
-		la := launch.Init(cnf, clc, lg)
-		programExitCode := la.Run()
-		lg.Info("done", logseal.F{"occured_errors": programExitCode})
-		os.Exit(programExitCode)
 	}
+
+	la := launch.Init(cnf, clc, lg)
+	programExitCode := la.Run()
+	lg.Info("done", logseal.F{"occured_errors": programExitCode})
+	os.Exit(programExitCode)
 }
 
 func pprint(i interface{}) {

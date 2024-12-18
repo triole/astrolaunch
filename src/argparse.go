@@ -34,7 +34,10 @@ var cli struct {
 	} `cmd:"" help:"list files matching the criteria"`
 
 	Exec struct {
-		At string `help:"event at which exec should trigger" short:"a"`
+		Cmd  []string `help:"command to run, flags always have to be in front" arg:"" optional:"" passthrough:""`
+		At   string   `help:"event at which exec should trigger" short:"a"`
+		Pre  string   `help:"pre range" short:"p"`
+		Post string   `help:"post range" short:"q"`
 	} `cmd:"" help:"execute command, if event trigger matches"`
 
 	Ops struct {
