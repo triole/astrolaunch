@@ -20,7 +20,7 @@ var (
 
 var CLI struct {
 	Conf        string `help:"path to config file" short:"c" default:"${configFile}"`
-	Filter      string `help:"only execute operations that match the regex filter" short:"f" default:".*"`
+	Filter      string `help:"only execute operations whose conf files match the regex filter" short:"f" default:".*"`
 	LogFile     string `help:"log file" default:"/dev/stdout"`
 	Astro       bool   `help:"only print astro calculation results" short:"a"`
 	Date        string `help:"print astro calculation for a certain date, format: YYYYMMDD, [use with -a]" short:"d"`
