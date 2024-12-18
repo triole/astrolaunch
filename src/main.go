@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/triole/logseal"
 )
@@ -14,11 +15,6 @@ import (
 func main() {
 	parseArgs()
 	lg := logseal.Init(cli.LogLevel, cli.LogFile, cli.LogNoColors, cli.LogJSON)
-	// if cli.Date != "" {
-	// 	tim, err := time.Parse("20060102", cli.Date)
-	// 	lg.IfErrFatal("can not parse date string, use format YYYYMMDD", logseal.F{"error": err, "string": cli.Date})
-	// 	now = tim
-	// }
 	cnf := conf.Init(cli.Conf, cli.DryRun, lg)
 	clc := calc.Init(
 		cnf.Now.UTC, cnf.Content.Location.Lat, cnf.Content.Location.Lon,
@@ -27,6 +23,14 @@ func main() {
 	if cli.Action == "calc" {
 		var add int
 		var res []calc.Calc
+		if cli.Calc.Date != "" {
+			tim, err := time.Parse("20060102", cli.Calc.Date)
+			lg.IfErrFatal(
+				"can not parse date string, use format YYYYMMDD",
+				logseal.F{"error": err, "string": cli.Calc.Date},
+			)
+			cnf.SetNow(tim)
+		}
 		for i := 0; i <= cli.Calc.Range; i++ {
 			add = 1
 			if i == 0 {
