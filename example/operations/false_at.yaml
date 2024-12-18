@@ -1,6 +1,6 @@
 ---
 name: test
-at: sun.sunset
+at: suna.sunset
 range:
   pre: 2m
   post: 4h

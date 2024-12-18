@@ -9,31 +9,31 @@ Astrolaunch may get other event data in the future. For data listed below are av
 ```go mdox-exec="r calc -d 20240601"
 {
   "time": {
-    "time": "2024-12-18T07:45:12.422695577Z"
+    "time": "2024-06-01T00:00:00Z"
   },
   "location": {
     "lat": 0,
     "lon": 0
   },
   "sun": {
-    "dawn": "2024-12-18T06:31:54.012846336+01:00",
-    "dusk": "2024-12-18T19:24:13.114789888+01:00",
-    "golden_hour": "2024-12-18T18:31:54.012886528+01:00",
-    "golden_hour_end": "2024-12-18T07:24:13.11474944+01:00",
-    "nadir": "2024-12-18T00:58:03.56381824+01:00",
-    "nautical_dawn": "2024-12-18T06:05:41.15314176+01:00",
-    "nautical_dusk": "2024-12-18T19:50:25.974494208+01:00",
-    "night": "2024-12-18T20:16:45.822935808+01:00",
-    "night_end": "2024-12-18T05:39:21.304700416+01:00",
-    "solar_noon": "2024-12-18T12:58:03.56381824+01:00",
-    "sunrise": "2024-12-18T06:54:25.73132416+01:00",
-    "sunrise_end": "2024-12-18T06:56:45.113187584+01:00",
-    "sunset": "2024-12-18T19:01:41.396311808+01:00",
-    "sunset_start": "2024-12-18T18:59:22.01444864+01:00"
+    "dawn": "2024-05-31T07:33:18.405588992+02:00",
+    "dusk": "2024-05-31T20:25:04.780291072+02:00",
+    "golden_hour": "2024-05-31T19:33:18.405588992+02:00",
+    "golden_hour_end": "2024-05-31T08:25:04.780291072+02:00",
+    "nadir": "2024-05-31T01:59:11.592940288+02:00",
+    "nautical_dawn": "2024-05-31T07:07:22.374439424+02:00",
+    "nautical_dusk": "2024-05-31T20:51:00.81144064+02:00",
+    "night": "2024-05-31T21:17:02.841270272+02:00",
+    "night_end": "2024-05-31T06:41:20.344609792+02:00",
+    "solar_noon": "2024-05-31T13:59:11.592940288+02:00",
+    "sunrise": "2024-05-31T07:55:36.021950976+02:00",
+    "sunrise_end": "2024-05-31T07:57:53.956708608+02:00",
+    "sunset": "2024-05-31T20:02:47.163929344+02:00",
+    "sunset_start": "2024-05-31T20:00:29.229171712+02:00"
   },
   "moon": {
-    "rise": "2024-12-18T21:00:00Z",
-    "set": "2024-12-18T08:00:00Z"
+    "rise": "2024-06-01T01:00:00Z",
+    "set": "2024-06-01T13:00:00Z"
   }
 }
 ```
@@ -57,7 +57,9 @@ Basically works like a JSON selector referring to the astro data available. See 
 
 Let's say astrolaunch is run two minutes before `sun.dusk`. Only if `range` is at least these two minutes, operations that should run at `sun.dusk` will be executed. Range only accounts to the time before. If an event is over, nothing will be run. Use a string to define a time range. Examples: 1h, 30m, 120s etc.
 
-## Configuration
+## Configurations
+
+## Main config
 
 ```go mdox-exec="tail -n+2 example/conf.yaml"
 operations_dir: "{{.SELFDIR}}/operations"
@@ -69,6 +71,30 @@ location:
 default_range:
   pre: 2m
   post: 10m
+```
+
+## Operations config
+
+```go mdox-exec="tail -n+2 example/operations/test1.yaml"
+name: test
+at: sun.dawn
+range:
+  pre: 2m
+  post: 4h
+exec:
+  - ["date"]
+  - ["echo", "this is dawn"]
+```
+
+## Usage examples
+
+```go mdox-exec="tail -n+3 example/usage.sh"
+astrolaunch calc -d 20241112
+astrolaunch calc -d 20241112 -r 3
+
+astrolaunch exec -a sun.dawn -p 1m -q 2h ls -la /tmp
+
+astrolaunch ops -f test
 ```
 
 ## Help
