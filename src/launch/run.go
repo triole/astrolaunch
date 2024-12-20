@@ -10,9 +10,9 @@ import (
 func (la Launch) Run() (programExitCode int) {
 	for _, op := range la.Conf.Content.Operations {
 		var err error
-		now := time.Now().UTC()
 		var diff time.Duration
 		fits := false
+
 		op.AtTime, err = la.Calc.GetTime(op.At)
 		if err != nil {
 			la.Lg.Warn(
@@ -28,7 +28,9 @@ func (la Launch) Run() (programExitCode int) {
 			if err != nil {
 				la.Lg.Warn(err)
 			}
-			diff, fits = la.calcRangeDiff(op.AtTime, now, preRange, postRange)
+			diff, fits = la.calcRangeDiff(
+				op.AtTime, la.Conf.Now.UTC, preRange, postRange,
+			)
 			if err != nil {
 				la.Lg.Warn(err)
 			}

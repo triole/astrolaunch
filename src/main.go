@@ -16,10 +16,10 @@ func main() {
 	parseArgs()
 	lg := logseal.Init(cli.LogLevel, cli.LogFile, cli.LogNoColors, cli.LogJSON)
 	cnf := conf.Init(cli.Conf, cli.DryRun, lg)
+	cnf.ReadConf()
 	clc := calc.Init(
 		cnf.Now.UTC, cnf.Content.Location.Lat, cnf.Content.Location.Lon,
 	)
-	cnf.ReadConf()
 
 	if cli.Action == "calc" {
 		var add int
