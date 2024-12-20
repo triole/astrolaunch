@@ -12,27 +12,27 @@ Astrolaunch may get other event data in the future. For data listed below are av
     "time": "2024-06-01T00:00:00Z"
   },
   "location": {
-    "lat": 0,
-    "lon": 0
+    "lat": 52.5200066,
+    "lon": 13.404954
   },
   "sun": {
-    "dawn": "2024-05-31T07:33:18.405588992+02:00",
-    "dusk": "2024-05-31T20:25:04.780291072+02:00",
-    "golden_hour": "2024-05-31T19:33:18.405588992+02:00",
-    "golden_hour_end": "2024-05-31T08:25:04.780291072+02:00",
-    "nadir": "2024-05-31T01:59:11.592940288+02:00",
-    "nautical_dawn": "2024-05-31T07:07:22.374439424+02:00",
-    "nautical_dusk": "2024-05-31T20:51:00.81144064+02:00",
-    "night": "2024-05-31T21:17:02.841270272+02:00",
-    "night_end": "2024-05-31T06:41:20.344609792+02:00",
-    "solar_noon": "2024-05-31T13:59:11.592940288+02:00",
-    "sunrise": "2024-05-31T07:55:36.021950976+02:00",
-    "sunrise_end": "2024-05-31T07:57:53.956708608+02:00",
-    "sunset": "2024-05-31T20:02:47.163929344+02:00",
-    "sunset_start": "2024-05-31T20:00:29.229171712+02:00"
+    "dawn": "2024-06-01T04:03:10.163053568+02:00",
+    "dusk": "2024-06-01T22:08:15.888291328+02:00",
+    "golden_hour": "2024-06-01T20:26:13.681104128+02:00",
+    "golden_hour_end": "2024-06-01T05:45:12.370240768+02:00",
+    "nadir": "2024-06-01T01:05:43.025672448+02:00",
+    "nautical_dawn": "2024-06-01T02:49:58.605823488+02:00",
+    "nautical_dusk": "2024-06-01T23:21:27.445521152+02:00",
+    "night": "0001-01-01T00:53:28+00:53",
+    "night_end": "0001-01-01T00:53:28+00:53",
+    "solar_noon": "2024-06-01T13:05:43.025672448+02:00",
+    "sunrise": "2024-06-01T04:50:47.40565248+02:00",
+    "sunrise_end": "2024-06-01T04:55:18.451255552+02:00",
+    "sunset": "2024-06-01T21:20:38.64569216+02:00",
+    "sunset_start": "2024-06-01T21:16:07.600089344+02:00"
   },
   "moon": {
-    "rise": "2024-06-01T01:00:00Z",
+    "rise": "2024-06-01T00:00:00Z",
     "set": "2024-06-01T13:00:00Z"
   }
 }
@@ -116,9 +116,10 @@ Flags:
   -V, --version-flag              display version
 
 Commands:
-  calc    list files matching the criteria
-  exec    execute command, if event trigger matches
-  ops     list files matching the criteria
+  calc       list files matching the criteria
+  exec       execute command, if event trigger matches
+  ops        list files matching the criteria
+  version    display version
 
 Run "astrolaunch <command> --help" for more information on a command.
 ```
