@@ -44,6 +44,9 @@ var cli struct {
 		Filter string `help:"only execute operations whose conf files match the regex filter" short:"f" default:".*"`
 	} `cmd:"" help:"list files matching the criteria"`
 
+	List struct {
+	} `cmd:"" help:"list available astro events"`
+
 	Version struct{} `cmd:"" help:"display version"`
 }
 

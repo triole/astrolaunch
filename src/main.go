@@ -21,6 +21,15 @@ func main() {
 		cnf.Now.UTC, cnf.Content.Location.Lat, cnf.Content.Location.Lon,
 	)
 
+	if cli.Action == "list" {
+		for k, _ := range clc.Sun {
+			fmt.Printf("sun.%s\n", k)
+		}
+		for k, _ := range clc.Moon {
+			fmt.Printf("moon.%s\n", k)
+		}
+	}
+
 	if cli.Action == "calc" {
 		var add int
 		var res []calc.Calc
