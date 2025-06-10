@@ -89,11 +89,15 @@ exec:
 ## Usage examples
 
 ```go mdox-exec="tail -n+3 example/usage.sh"
+# calc diff and print
 astrolaunch calc -d 20241112
 astrolaunch calc -d 20241112 -r 3
 
+# execute command given as cli arg
 astrolaunch exec -a sun.dawn -p 1m -q 2h ls -la /tmp
+astrolaunch exec --log-level debug -w -a sun.dawn -p 1m -q 1m ls -la /tmp
 
+# process config file and run operations defined in there
 astrolaunch ops -f test
 ```
 
@@ -116,9 +120,10 @@ Flags:
   -V, --version-flag              display version
 
 Commands:
-  calc       list files matching the criteria
-  exec       execute command, if event trigger matches
-  ops        list files matching the criteria
+  calc       print astro calculation for a certain date
+  exec       execute given command, if event trigger matches, exit if not
+  ops        load operations specified in config file and execute them or not
+  list       list available astro events
   version    display version
 
 Run "astrolaunch <command> --help" for more information on a command.
