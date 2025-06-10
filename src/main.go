@@ -21,16 +21,8 @@ func main() {
 		cnf.Now.UTC, cnf.Content.Location.Lat, cnf.Content.Location.Lon,
 	)
 
-	if cli.Action == "list" {
-		for k := range clc.Sun {
-			fmt.Printf("sun.%s\n", k)
-		}
-		for k := range clc.Moon {
-			fmt.Printf("moon.%s\n", k)
-		}
-	}
-
-	if cli.Action == "calc" {
+	switch cli.Action {
+	case "calc":
 		var add int
 		var res []calc.Calc
 		if cli.Calc.Date != "" {
@@ -58,9 +50,7 @@ func main() {
 			pprint(res)
 		}
 		os.Exit(0)
-	}
-
-	if cli.Action == "exec" {
+	case "exec":
 		var op conf.Operation
 		op.Exec = [][]string{cli.Exec.Cmd}
 		op.At = cli.Exec.At
@@ -73,9 +63,14 @@ func main() {
 			op.Range.Post = cli.Exec.Post
 		}
 		cnf.Content.Operations = append(cnf.Content.Operations, op)
-	}
-
-	if cli.Action == "ops" {
+	case "list":
+		for k := range clc.Sun {
+			fmt.Printf("sun.%s\n", k)
+		}
+		for k := range clc.Moon {
+			fmt.Printf("moon.%s\n", k)
+		}
+	case "ops":
 		cnf.OpsFilter = cli.Ops.Filter
 		cnf.ReadOps()
 		lg.Info(
