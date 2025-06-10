@@ -36,13 +36,15 @@ var cli struct {
 	Exec struct {
 		Cmd  []string `help:"command to run, flags always have to be in front" arg:"" optional:"" passthrough:""`
 		At   string   `help:"event at which exec should trigger" short:"a"`
-		Pre  string   `help:"pre range" short:"p"`
-		Post string   `help:"post range" short:"q"`
-	} `cmd:"" help:"execute command, if event trigger matches"`
+		Pre  string   `help:"pre range" short:"p" default:"1m"`
+		Post string   `help:"post range" short:"q" default:"5m"`
+		Wait bool     `help:"wait until astro date met, default is to do nothing in case it isn't" short:"w"`
+		Max  string   `help:"max wait time, only relevant together with -w" default:"6h"`
+	} `cmd:"" help:"execute given command, if event trigger matches, exit if not"`
 
 	Ops struct {
 		Filter string `help:"only execute operations whose conf files match the regex filter" short:"f" default:".*"`
-	} `cmd:"" help:"list files matching the criteria"`
+	} `cmd:"" help:"load operations specified in config file and execute them or not"`
 
 	List struct {
 	} `cmd:"" help:"list available astro events"`
