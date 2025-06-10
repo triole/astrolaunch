@@ -31,7 +31,7 @@ var cli struct {
 	Calc struct {
 		Date  string `help:"print astro calculation for a certain date, format: YYYYMMDD, [use with -a]" short:"d"`
 		Range int    `help:"range of days, astro calculation for a multiple days, [use with -a]" short:"r"`
-	} `cmd:"" help:"list files matching the criteria"`
+	} `cmd:"" help:"print astro calculation for a certain date"`
 
 	Exec struct {
 		Cmd  []string `help:"command to run, flags always have to be in front" arg:"" optional:"" passthrough:""`
