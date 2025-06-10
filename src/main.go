@@ -22,10 +22,10 @@ func main() {
 	)
 
 	if cli.Action == "list" {
-		for k, _ := range clc.Sun {
+		for k := range clc.Sun {
 			fmt.Printf("sun.%s\n", k)
 		}
-		for k, _ := range clc.Moon {
+		for k := range clc.Moon {
 			fmt.Printf("moon.%s\n", k)
 		}
 	}
