@@ -20,8 +20,13 @@ func (la Launch) calcRangeDiff(t1, t2 time.Time, preRange, postRange time.Durati
 	return
 }
 
-func (la Launch) str2dur(s string) (dur time.Duration, err error) {
+func (la Launch) str2dur(s string, verbose bool) (dur time.Duration, err error) {
 	dur, err = str2duration.ParseDuration(s)
+	if verbose {
+		if err != nil {
+			la.Lg.Warn(err)
+		}
+	}
 	return
 }
 

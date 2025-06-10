@@ -82,8 +82,13 @@ func main() {
 		lg.Debug("astro calculations", logseal.F{"calc": fmt.Sprintf("%+v", clc)})
 	}
 
+	var programExitCode int
 	la := launch.Init(cnf, clc, lg)
-	programExitCode := la.Run()
+	if cli.Exec.Wait {
+		programExitCode = la.WaitAndRun()
+	} else {
+		programExitCode = la.Run()
+	}
 	lg.Info("done", logseal.F{"occured_errors": programExitCode})
 	os.Exit(programExitCode)
 }

@@ -7,12 +7,19 @@ import (
 	"github.com/triole/logseal"
 )
 
+func (la Launch) WaitAndRun() (programExitCode int) {
+	la.runTicker(la.Conf.Content.Operations[0])
+	la.Run()
+	return
+}
+
 func (la Launch) Run() (programExitCode int) {
 	for _, op := range la.Conf.Content.Operations {
 		var err error
 		var diff time.Duration
 		fits := false
 
+		la.Conf.SetNow(time.Now())
 		op.AtTime, err = la.Calc.GetTime(op.At)
 		if err != nil {
 			la.Lg.Warn(
@@ -20,20 +27,11 @@ func (la Launch) Run() (programExitCode int) {
 				logseal.F{"error": err, "operation_name": op.Name},
 			)
 		} else {
-			preRange, err := la.str2dur(op.Range.Pre)
-			if err != nil {
-				la.Lg.Warn(err)
-			}
-			postRange, err := la.str2dur(op.Range.Post)
-			if err != nil {
-				la.Lg.Warn(err)
-			}
+			preRange, _ := la.str2dur(op.Range.Pre, true)
+			postRange, _ := la.str2dur(op.Range.Post, true)
 			diff, fits = la.calcRangeDiff(
 				op.AtTime, la.Conf.Now.UTC, preRange, postRange,
 			)
-			if err != nil {
-				la.Lg.Warn(err)
-			}
 			if fits {
 				la.Lg.Info("exec operation", la.printOpStatus(op, diff, fits))
 				_, exitcode, _ := la.execute(op.Exec)

@@ -62,7 +62,7 @@ func assertCalcRangeDiff(t1, t2 time.Time, r1, r2 time.Duration, exp bool, t *te
 
 func toDur(str string) (dur time.Duration) {
 	la := new()
-	dur, _ = la.str2dur(str)
+	dur, _ = la.str2dur(str, false)
 	return
 }
 
